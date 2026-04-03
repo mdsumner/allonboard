@@ -203,9 +203,9 @@ async def map():
             hillshade=input.hillshade(),
         )
         layer = RasterLayer.from_geotiff(geotiff, render_tile=renderer)
-        return Map(layer, _initial_view_state={"longitude": 150, "latitude": -60, "zoom": 3})
+        return Map(layer, view_state={"longitude": 150, "latitude": -60, "zoom": 3})
 
     else:
         geotiff = await geotiff_nz()
         layer = RasterLayer.from_geotiff(geotiff, render_tile=render_tile_nz_rgb)
-        return Map(layer, _initial_view_state={"longitude": 172.5, "latitude": -43.5, "zoom": 8})
+        return Map(layer, view_state={"longitude": 172.5, "latitude": -43.5, "zoom": 8})
