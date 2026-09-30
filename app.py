@@ -105,8 +105,7 @@ with ui.sidebar():
 # ---------------------------------------------------------------------------
 # GeoTIFF handles (created once, reused across renders)
 # ---------------------------------------------------------------------------
-# GEBCO 2024 COG on Pawsey (Michael's copy)
-# Also available at: https://data.source.coop/alexgleith/gebco-2024/GEBCO_2024.tif
+# GEBCO 2024 COG on Pawsey 
 GEBCO_BASE_URL = "https://projects.pawsey.org.au"
 GEBCO_COG_PATH = "idea-gebco-tif/GEBCO_2024.tif"
 
@@ -114,6 +113,8 @@ GEBCO_COG_PATH = "idea-gebco-tif/GEBCO_2024.tif"
 NZ_BUCKET = "nz-imagery"
 NZ_COG_PATH = "new-zealand/new-zealand_2024-2025_10m/rgb/2193/CC11.tiff"
 
+IBCSO_BASE_URL = "https://github.com"
+IBCSO_COG_PATH = "mdsumner/ibcso-cog/raw/main/IBCSO_v2_ice-surface_cog.tif"
 
 @reactive.calc
 async def geotiff_gebco():
@@ -127,6 +128,12 @@ async def geotiff_nz():
     """Open NZ imagery COG from S3."""
     store = S3Store(NZ_BUCKET, region="ap-southeast-2", skip_signature=True)
     return await GeoTIFF.open(NZ_COG_PATH, store=store)
+
+@reactive.calc
+async def geotiff_ibcso():
+    """Open IBCSO COG from HTTP on gh."""
+    store = HTTPStore(IBCSO_BASE_URL)
+    return await GeoTIFF.open(IBCSO_COG_PATH, store=store)
 
 
 # ---------------------------------------------------------------------------
